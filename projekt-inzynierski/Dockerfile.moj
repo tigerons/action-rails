@@ -1,0 +1,16 @@
+FROM ruby:2.5.3-alpine3.8
+
+RUN apk add --no-cache --update build-base \
+    linux-headers \
+    git \
+    sqlite \
+    nodejs \
+    yarn \
+    tzdata
+
+WORKDIR /app 
+COPY . /app
+
+COPY --from=builder public/ /app/public/
+
+CMD ["bin/rails", "server"]
